@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <!-- Muna að tengja id við takka-->
-
+<!-- True and false buttons will be switched out for RadioButtons that are in a RadioGroup -->
         <Button
             android:id="@+id/true_button"
             android:layout_width="wrap_content"
