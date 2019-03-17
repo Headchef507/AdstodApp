@@ -11,10 +11,13 @@ import android.widget.Toast;
 //CONTROLLER
 //TextView and Button are VIEW
 public class MainActivity extends AppCompatActivity {
+
     private Button mTrueButton; //m-ið er name nameing convention í Android
     private Button mFalseButton;
     private Button mNextButton;
+    private Button mPreviousButton;
     private TextView mQuestionTextView;
+    private String lanuage; //tilviksbreytan sem heldur utan um tungumálið
     //bý til tilviksbreytu af Question með því að setja hana í lista
     private Question[] mQuestionBank = new Question[] {
 //harðkóðum rétta svarið inn. R.string.question_.. nær í eftirfarandi textan úr strings.xml
@@ -25,7 +28,14 @@ public class MainActivity extends AppCompatActivity {
             new Question(R.string.question_mideast, false),
             new Question(R.string.question_asia, true)
     };
+    private static final String KEY_IINDEX = "index";
     private int mCurrentIndex = 0;
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt(KEY_IINDEX, mCurrentIndex);
+    }
 
     private void updateQuestion(){
         //Retrieve text for current question and update the QuestionTextView to display it
@@ -36,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){ //check if we recieved any state from a previous instance of the activity
+            mCurrentIndex = savedInstanceState.getInt(KEY_IINDEX,0);//retrieve question index or use default value of 0 if none was stored in Bundle
+        }
         setContentView(R.layout.activity_main);
 //To retrieve the QuestionTextView object from the view hierarchy
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
@@ -70,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+        mPreviousButton = (Button) findViewById(R.id.previous_button);
+        mPreviousButton.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCurrentIndex = (mCurrentIndex - 1 ) % mQuestionBank.length;
+                updateQuestion();
+            }
+        }));
         //After all the setup is complete, display first question
         updateQuestion();
     }
