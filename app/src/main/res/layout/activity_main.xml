@@ -41,7 +41,23 @@
             android:text="@string/false_button"/>
 
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#1A99C4"
+                android:text="Mjög sammála">
+            </RadioButton>
+        </RadioGroup>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,6 +73,7 @@
             android:layout_height="wrap_content"
             android:text="Previous"/>
     </LinearLayout>
+
 
     <!--</android.support.constraint.ConstraintLayout> -->
 </LinearLayout>
