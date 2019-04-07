@@ -1,5 +1,11 @@
 package com.example.adstod;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.List;
+import org.json.simple.JSONArray;
+import java.util.Map;
+
 //MODEL LAYER
 //MODEL LAYER
 //Class sem stjórnar flæði spurninga
@@ -12,6 +18,19 @@ public class Question {
     public Question(int TextResId, boolean AnswerTrue){
         mAnswerTrue = AnswerTrue;
         mTextResId = TextResId;
+    }
+
+//    class JsonEncodeDemo {
+
+    public static void main(String[] args) throws JSONException {
+        JSONObject obj = new JSONObject();
+
+        obj.put("name", "foo");
+        obj.put("num", new Integer(100));
+        obj.put("balance", new Double(1000.21));
+        obj.put("is_vip", new Boolean(true));
+
+        System.out.print(obj);
     }
 
     public void setTextResId(int TextResId) {
