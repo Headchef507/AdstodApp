@@ -22,13 +22,13 @@
         android:layout_height="wrap_content"
         android:padding="24dp"/>
 
-<!--    <LinearLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"> -->
+        android:orientation="horizontal">
         <!-- Muna að tengja id við takka-->
 <!-- True and false buttons will be switched out for RadioButtons that are in a RadioGroup -->
-<!--        <Button
+        <Button
             android:id="@+id/true_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             android:text="@string/false_button"/>
 
     </LinearLayout>
-    -->
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
