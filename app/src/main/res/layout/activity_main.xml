@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <RadioButton
-                android:id="@+id/first_radbut"
+                android:id="@+id/option_MjogSam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="#1A99C4"
@@ -44,7 +44,7 @@
             </RadioButton>
 
             <RadioButton
-                android:id="@+id/second_radbut"
+                android:id="@+id/option_FrekarSam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="#1A99C4"
@@ -52,7 +52,7 @@
             </RadioButton>
 
             <RadioButton
-                android:id="@+id/third_radbut"
+                android:id="@+id/option_HvorkiNe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="#1A99C4"
@@ -60,7 +60,7 @@
             </RadioButton>
 
             <RadioButton
-                android:id="@+id/fourth_radbut"
+                android:id="@+id/option_FrekarOsam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="#1A99C4"
@@ -68,7 +68,7 @@
             </RadioButton>
 
             <RadioButton
-                android:id="@+id/fifth_radbut"
+                android:id="@+id/option_MjogOsam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="#1A99C4"

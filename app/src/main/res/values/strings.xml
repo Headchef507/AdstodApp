@@ -3,13 +3,13 @@
     <string name="previous_button">
         Previous
     </string>
-    <string name="language_English">
+    <string name="english_button">
         English
     </string>
-    <string name="language_Islenska">
+    <string name="icelandic_button">
         Íslenska
     </string>
-    <string name="language_Polski">
+    <string name="polish_button">
         Polski
     </string>
     <string name="next_button">
