@@ -6,8 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-//CONTROLLER
-//TextView and Button are VIEW
+// Controller fyrir upphafssíðu
 public class MainActivity extends AppCompatActivity {
 
     private Button mAcceptButton;
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Til að tengja við xml skrána þá notum við R.id.truebutton (R er auto generated class sem er tengingin okkar(don´t fuck with it))
+        // Takki til að samþykkja skilmála
         mAcceptButton = findViewById(R.id.accept_button);
         mAcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override

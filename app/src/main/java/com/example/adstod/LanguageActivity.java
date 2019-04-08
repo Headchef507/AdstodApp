@@ -6,8 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-//CONTROLLER
-//TextView and Button are VIEW
+// Controller fyrir tungumálaskjá
 public class LanguageActivity extends AppCompatActivity {
 
     private Button mEnglishButton;
@@ -18,6 +17,7 @@ public class LanguageActivity extends AppCompatActivity {
 
     private void applyLanguage() {
         Intent intent = new Intent(this, QuestionActivity.class);
+        // Sendum tungumál áfram til að nota í næsta skjá
         intent.putExtra(KEY_LANGUAGE, mLanguage);
         startActivity(intent);
     }
@@ -27,7 +27,7 @@ public class LanguageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language);
 
-        //Til að tengja við xml skrána þá notum við R.id.truebutton (R er auto generated class sem er tengingin okkar(don´t fuck with it))
+        // Takki fyrir ensku
         mEnglishButton = findViewById(R.id.english_button);
         mEnglishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +36,7 @@ public class LanguageActivity extends AppCompatActivity {
                 applyLanguage();
             }
         });
-        //Til að tengja við xml skrána þá notum við R.id.truebutton (R er auto generated class sem er tengingin okkar(don´t fuck with it))
+        // Takki fyrir íslensku
         mIcelandicButton = findViewById(R.id.icelandic_button);
         mIcelandicButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +45,7 @@ public class LanguageActivity extends AppCompatActivity {
                 applyLanguage();
             }
         });
-        //Til að tengja við xml skrána þá notum við R.id.truebutton (R er auto generated class sem er tengingin okkar(don´t fuck with it))
+        // Takki fyrir pólsku
         mPolishButton = findViewById(R.id.polish_button);
         mPolishButton.setOnClickListener(new View.OnClickListener() {
             @Override

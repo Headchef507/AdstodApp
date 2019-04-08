@@ -8,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 //CONTROLLER
-//TextView and Button are VIEW
 public class QuestionActivity extends AppCompatActivity {
 
     private Button mNextButton;
