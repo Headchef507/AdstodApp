@@ -16,6 +16,7 @@ public class QuestionActivity extends AppCompatActivity {
     //bý til tilviksbreytu af Question með því að setja hana í lista
     private Question[] mQuestionBank = new Question[] {
     //harðkóðum rétta svarið inn. R.string.question_.. nær í eftirfarandi textan úr strings.xml
+            //það þarf að taka allt þetta í burtu, en samt helst að nota eða breyta því
             new Question(R.string.question_oceans, true),
             new Question(R.string.question_Akureyri, false),
             new Question(R.string.question_africa, false),
