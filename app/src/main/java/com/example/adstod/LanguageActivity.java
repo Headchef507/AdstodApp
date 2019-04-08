@@ -12,8 +12,8 @@ public class LanguageActivity extends AppCompatActivity {
     private Button mEnglishButton;
     private Button mIcelandicButton;
     private Button mPolishButton;
-    private String mLanguage = "";
-    private static final String KEY_LANGUAGE = "language";
+    private String mLanguage;
+    private static final String KEY_LANGUAGE = "com.example.adstod.language";
 
     private void applyLanguage() {
         Intent intent = new Intent(this, QuestionActivity.class);

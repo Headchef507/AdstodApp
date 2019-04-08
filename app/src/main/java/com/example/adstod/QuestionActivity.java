@@ -7,13 +7,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//CONTROLLER
+// Controller fyrir spurningar
 public class QuestionActivity extends AppCompatActivity {
 
     private Button mNextButton;
     private Button mPreviousButton;
     private TextView mQuestionTextView;
-    private String mLanguage; //tilviksbreytan sem heldur utan um tungumálið
     //bý til tilviksbreytu af Question með því að setja hana í lista
     private Question[] mQuestionBank = new Question[] {
     //harðkóðum rétta svarið inn. R.string.question_.. nær í eftirfarandi textan úr strings.xml
@@ -24,13 +23,15 @@ public class QuestionActivity extends AppCompatActivity {
             new Question(R.string.question_mideast, false),
             new Question(R.string.question_asia, true)
     };
-    private static final String KEY_IINDEX = "index";
+    private static final String KEY_INDEX = "index";
+    private static final String KEY_LANGUAGE = "com.example.adstod.language";
     private int mCurrentIndex = 0;
+    private String mLanguage;
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt(KEY_IINDEX, mCurrentIndex);
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
     }
 
     private void updateQuestion(){
@@ -43,9 +44,13 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState != null){ //check if we recieved any state from a previous instance of the activity
-            mCurrentIndex = savedInstanceState.getInt(KEY_IINDEX,0);//retrieve question index or use default value of 0 if none was stored in Bundle
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX,0);//retrieve question index or use default value of 0 if none was stored in Bundle
         }
         setContentView(R.layout.activity_question);
+
+        // Ná í tungumál úr LanguageActivity
+        mLanguage = getIntent().getStringExtra(KEY_LANGUAGE);
+
         //To retrieve the QuestionTextView object from the view hierarchy
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
