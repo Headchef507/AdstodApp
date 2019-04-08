@@ -11,15 +11,13 @@ import android.widget.Toast;
 //TextView and Button are VIEW
 public class MainActivity extends AppCompatActivity {
 
-    private Button mTrueButton; //m-ið er name nameing convention í Android
-    private Button mFalseButton;
     private Button mNextButton;
     private Button mPreviousButton;
     private TextView mQuestionTextView;
-    private String lanuage; //tilviksbreytan sem heldur utan um tungumálið
+    private String language; //tilviksbreytan sem heldur utan um tungumálið
     //bý til tilviksbreytu af Question með því að setja hana í lista
     private Question[] mQuestionBank = new Question[] {
-//harðkóðum rétta svarið inn. R.string.question_.. nær í eftirfarandi textan úr strings.xml
+    //harðkóðum rétta svarið inn. R.string.question_.. nær í eftirfarandi textan úr strings.xml
             new Question(R.string.question_oceans, true),
             new Question(R.string.question_Akureyri, false),
             new Question(R.string.question_africa, false),
@@ -49,30 +47,10 @@ public class MainActivity extends AppCompatActivity {
             mCurrentIndex = savedInstanceState.getInt(KEY_IINDEX,0);//retrieve question index or use default value of 0 if none was stored in Bundle
         }
         setContentView(R.layout.activity_main);
-//To retrieve the QuestionTextView object from the view hierarchy
+        //To retrieve the QuestionTextView object from the view hierarchy
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
         //Til að tengja við xml skrána þá notum við R.id.truebutton (R er auto generated class sem er tengingin okkar(don´t fuck with it))
-        mTrueButton = (Button) findViewById(R.id.true_button);
-        mTrueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Check if true is correct answer
-                checkAnswer(true);
-                //before the checkAnswer() method was created
-                // Toast.makeText(MainActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
-            }
-        });
-        mFalseButton = (Button) findViewById(R.id.false_button);
-        mFalseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //check if false is correct answer
-                checkAnswer(false);
-                //before the checkAnswer() method was created
-                //Toast.makeText(MainActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
-            }
-        });
         mNextButton = (Button) findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,14 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         int messageResId = 0;
 
-        //Determine appropriate response
-        if (userPressedTrue == andswerIsTrue) {
-            messageResId = R.string.correct_toast;
-        }
-        else {
-            messageResId = R.string.incorrect_toast;
-        }
-//Create and show toast with response.
+        //Create and show toast with response.
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 }

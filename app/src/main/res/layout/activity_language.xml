@@ -18,19 +18,19 @@
             android:id="@+id/english_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="English"/>
+            android:text="@string/language_English"/>
 
         <Button
             android:id="@+id/icelandic_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Íslenska"/>
+            android:text="@string/language_Islenska"/>
 
         <Button
             android:id="@+id/polish_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Polski"/>
+            android:text="@string/language_Polski"/>
 
 
         </LinearLayout>
