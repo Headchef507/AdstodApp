@@ -3,6 +3,9 @@
     <string name="previous_button">
         Previous
     </string>
+    <string name="accept_button">
+        Accept
+    </string>
     <string name="english_button">
         English
     </string>
@@ -48,6 +51,7 @@
     <string name="question_asia">
         Lake Baikal is the world\'s oldest and deepest freshwater lake.
     </string>
+    <string name="title_activity_main">MainActivity</string>
 
 
 </resources>
