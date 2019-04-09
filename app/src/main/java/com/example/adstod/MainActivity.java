@@ -21,9 +21,18 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
 
     private Button mAcceptButton;
+    private Button mRejectButton;
+    private static final String KEY_PERMISSION = "com.example.adstod.language";
 
     private void acceptTerms() {
         Intent intent = new Intent(this, LanguageActivity.class);
+        intent.putExtra(KEY_PERMISSION, 1);
+        startActivity(intent);
+    }
+
+    private void rejectTerms() {
+        Intent intent = new Intent(this, LanguageActivity.class);
+        intent.putExtra(KEY_PERMISSION, 0);
         startActivity(intent);
     }
 
@@ -48,16 +57,36 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseBody> _,
                                            Response<ResponseBody> response) {
-                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                        acceptTerms();
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> _, Throwable t) {
                         t.printStackTrace();
-                        Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Tenging mistókst, vinsamlegast tengdu tækið við net\nConnection Failed, please connect the device to the internet", Toast.LENGTH_LONG).show();
                     }
                 });
-                acceptTerms();
+            }
+        });
+        mRejectButton = findViewById(R.id.reject_button);
+        mRejectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<ResponseBody> call = service.hello();
+                final Context context = getApplicationContext();
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> _,
+                                           Response<ResponseBody> response) {
+                        rejectTerms();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> _, Throwable t) {
+                        t.printStackTrace();
+                        Toast.makeText(context, "Tenging mistókst, vinsamlegast tengdu tækið við net\nConnection Failed, please connect the device to the internet", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
     }
