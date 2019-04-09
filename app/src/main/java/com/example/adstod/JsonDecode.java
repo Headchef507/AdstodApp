@@ -14,6 +14,25 @@ public class JsonDecode {
         public static void main(String[] args) {
             JSONParser parser = new JSONParser();
             String s = "[0,{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}]";
+            /*
+
+
+             {
+   "firstName": "John", "lastName": "Smith", "age": 25,
+   "phoneNumber": [
+       { "type": "home", "number": "212 555-1234" },
+       { "type": "fax", "number": "646 555-4567" }
+    ]
+ }
+
+{
+    "Question": "Hvað ertu gamall?", "Answers": [
+        { "Answeroption1": "Mjög sammála", "Answeroption2": "Frekar sammála",
+          "Answeroption3": "Hvorki né", "Answeroption4": "Frekar ósammála",
+          "Answeroption5": "Mjög ósammála" }
+        ]
+}
+            */
 
             try{
                 Object obj = parser.parse(s);
