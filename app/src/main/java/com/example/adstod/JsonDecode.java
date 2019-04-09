@@ -12,8 +12,21 @@ https://www.tutorialspoint.com/how-to-parse-json-in-java
 public class JsonDecode {
     //theQnA[0] = is the Question, theQnA[1-n] are the Answer Options
     private String[] theQnA;
+    JSONParser parser = new JSONParser();
 
         public String[] QuestionParser(JSONObject QnA){
+            String jstring = QnA.toString();
+            Object obj = QnA;
+            JSONArray array = (JSONArray)obj;
+            JSONObject obj2 = (JSONObject)array.get(1);
+            theQnA[0] = obj2.toString();
+
+           // while(QnA.hasNext())
+           // theQnA = QnA.Answers[0];
+        } catch(ParseException pe) {
+
+        System.out.println("position: " + pe.getPosition());
+        System.out.println(pe);
 
             return theQnA;
         }
@@ -22,7 +35,20 @@ public class JsonDecode {
             JSONParser parser = new JSONParser();
             String s = "[0,{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}]";
             /*
-
+[0,
+    {"1":
+        {"2":
+            {"3":
+                {"4":
+                    [5,
+                        {"6":7
+                        }
+                     ]
+                }
+            }
+        }
+    }
+]
 
              {
    "firstName": "John", "lastName": "Smith", "age": 25,
