@@ -1,6 +1,5 @@
 package com.example.adstod;
 
-import or
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
