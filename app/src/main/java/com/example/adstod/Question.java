@@ -23,6 +23,7 @@ public class Question {
 //    class JsonEncodeDemo {
 
     public static void main(String[] args) throws JSONException {
+        //https://www.javatpoint.com/java-json-example
         JSONObject obj = new JSONObject();
 
         obj.put("name", "foo");
