@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
+import java.util.List;
 
 /*
 The following example makes use of JSONObject and JSONArray where JSONObject is a java.util.
@@ -21,6 +22,8 @@ public class JsonDecode {
         public String[] QuestionParser(JSONObject QnA) throws JSONException {
             JSONObject object = new JSONObject();
 
+            List<Question> listq = (List<Question>) QnA.get("forApp");
+            listq.get(1);
 
             int i = 0;
             String jstring = QnA.toString();
