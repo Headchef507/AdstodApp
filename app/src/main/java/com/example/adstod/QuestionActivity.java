@@ -1,33 +1,20 @@
 package com.example.adstod;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 // Controller fyrir spurningar
 public class QuestionActivity extends AppCompatActivity {
 
     private Button mNextButton;
     private Button mPreviousButton;
-    private TextView mQuestionTextView;
-    //bý til tilviksbreytu af Question með því að setja hana í lista
-    private Question[] mQuestionBank = new Question[] {
-    //harðkóðum rétta svarið inn. R.string.question_.. nær í eftirfarandi textan úr strings.xml
-            //það þarf að taka allt þetta í burtu, en samt helst að nota eða breyta því
-            new Question(R.string.question_oceans, true),
-            new Question(R.string.question_Akureyri, false),
-            new Question(R.string.question_africa, false),
-            new Question(R.string.question_americas, true),
-            new Question(R.string.question_mideast, false),
-            new Question(R.string.question_asia, true)
-    };
     private static final String KEY_INDEX = "index";
     private static final String KEY_LANGUAGE = "com.example.adstod.language";
     private int mCurrentIndex = 0;
-    private String mLanguage;
+    private String mLanguage = "english";
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
@@ -36,53 +23,95 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void updateQuestion(){
-        //Retrieve text for current question and update the QuestionTextView to display it
-        int question = mQuestionBank[mCurrentIndex].getTextResId();
-        mQuestionTextView.setText(question);
+        // Create fragment and give it an argument specifying the article it should show
+        QuestionFragment newFragment = new QuestionFragment();
+        Bundle args = new Bundle();
+        args.putInt(QuestionFragment.KEY_NUMBUTTONS, 3);
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.question_fragment, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    // If on the first question make the previous button invisible
+    private void setPreviousVisibility() {
+        if (mCurrentIndex == 0) {
+            mPreviousButton.setVisibility(View.INVISIBLE);
+        } else {
+            mPreviousButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // If on the last question make the next button a finish button
+    private void setNextVisibility() {
+        if (mCurrentIndex == 4) {
+            mNextButton.setText(R.string.finish_button);
+        } else {
+            mNextButton.setText(R.string.next_button);
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null){ //check if we recieved any state from a previous instance of the activity
-            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX,0);//retrieve question index or use default value of 0 if none was stored in Bundle
+        // Check if we recieved any state from a previous instance of the activity
+        if(savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX,0);
         }
         setContentView(R.layout.activity_question);
 
-        // Ná í tungumál úr LanguageActivity
+        // Fetch language from LanguageActivity
         mLanguage = getIntent().getStringExtra(KEY_LANGUAGE);
 
-        //To retrieve the QuestionTextView object from the view hierarchy
-        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        // Create a new Fragment to be placed in the activity layout
+        QuestionFragment firstFragment = new QuestionFragment();
 
-        //Til að tengja við xml skrána þá notum við R.id.truebutton (R er auto generated class sem er tengingin okkar(don´t fuck with it))
+        // In case this activity was started with special instructions from an
+        // Intent, pass the Intent's extras to the fragment as arguments
+        Bundle args = new Bundle();
+        args.putInt(QuestionFragment.KEY_NUMBUTTONS, 5);
+        firstFragment.setArguments(args);
+
+        // Add the fragment to the 'question_fragment' FrameLayout
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.question_fragment, firstFragment).commit();
+
+        // Navigation buttons
         mNextButton = findViewById(R.id.next_button);
+        mPreviousButton = findViewById(R.id.previous_button);
+
+        // Change buttons if on first or last question
+        setPreviousVisibility();
+        setNextVisibility();
+
+        // Next button listener
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Increment question index (modulo total number of questions) and display new question
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                mCurrentIndex++;
+                setPreviousVisibility();
+                setNextVisibility();
                 updateQuestion();
             }
         });
-        mPreviousButton = findViewById(R.id.previous_button);
-        mPreviousButton.setOnClickListener((new View.OnClickListener() {
+
+        // Previous button listener
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex - 1 ) % mQuestionBank.length;
+                mCurrentIndex--;
+                setPreviousVisibility();
+                setNextVisibility();
                 updateQuestion();
             }
-        }));
-        //After all the setup is complete, display first question
-        updateQuestion();
-    }
-    private void checkAnswer(boolean userPressedTrue) {
-        //Retrieve correct answer for current question
-        boolean andswerIsTrue = mQuestionBank[mCurrentIndex].ismAnswerTrue();
-
-        int messageResId = 0;
-
-        //Create and show toast with response.
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+        });
     }
 }

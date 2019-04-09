@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Adstod</string>
-    <string name="previous_button">
-        Previous
-    </string>
     <string name="accept_button">
         Accept
     </string>
@@ -17,6 +14,12 @@
     </string>
     <string name="next_button">
         Next
+    </string>
+    <string name="previous_button">
+        Previous
+    </string>
+    <string name="finish_button">
+        Finish
     </string>
     <string name="option_MjogSam">
         Mjög sammála
@@ -33,25 +36,6 @@
     <string name="option_MjogOsam">
         Mjög ósammála
     </string>
-    <string name="question_Akureyri">
-        Akureyri is the largest city in Iceland
-    </string>
-    <string name="question_oceans">
-        The Pacific Ocean is larger that the Atlantic Ocean.
-    </string>
-    <string name="question_mideast">
-        The Suez Canal connects the Red Sea and the India Ocean
-    </string>
-    <string name="question_africa">
-        The source of the Nile River is in Egypt
-    </string>
-    <string name="question_americas">
-        The Amazon River is the longest river in the Americas.
-    </string>
-    <string name="question_asia">
-        Lake Baikal is the world\'s oldest and deepest freshwater lake.
-    </string>
-    <string name="title_activity_main">MainActivity</string>
 
 
 </resources>
