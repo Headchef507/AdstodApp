@@ -1,52 +1,79 @@
 package com.example.adstod;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.List;
-import org.json.simple.JSONArray;
-import java.util.Map;
+import java.util.Iterator;
 
-//MODEL LAYER
-//MODEL LAYER
-//Class sem stjórnar flæði spurninga
-public class Question {
+public class Question implements Iterator<Question> {
 
 
-    private int mTextResId;
-    private boolean mAnswerTrue;
+/*
+The class that each questionText and there multiple answers.
+ */
 
-    public Question(int TextResId, boolean AnswerTrue){
-        mAnswerTrue = AnswerTrue;
-        mTextResId = TextResId;
+   // public class Question implements Iterator<Question> {
+
+        // Declares that this attribute is the id (primary key
+        private long id;
+
+        private String questionText;
+        private String[] answerOptions;
+        private int answer;
+
+        //PostitNote used an empty constructor, because we need to be able to create an empty PostitNote to add
+        //to our model so we can use it with our form
+        public Question() {
+            //We need and empty Question in the beginning
+        }
+        public Question(long id, String questionText, String[] answerOptions, int answer){
+            this.id = id;
+            this.questionText = questionText;
+            this.answerOptions = answerOptions;
+            this.answer = answer;
+
+        }
+
+        //the id of each questionText
+        public long getId() { return id; }
+
+        public void setId(long id) { this.id = id; }
+
+
+        //this is where the answer the User picks best fits him or her.
+        public int getAnswer(){ return answer; }
+
+        public void setAnswer(int answer){ this.answer = answer; }
+
+        //the questionText for the User. For example: questionText == "What is your sex?"
+        public String getQuestionText() { return questionText; }
+
+        public void setQuestionText(String questionText) { this.questionText = questionText; }
+
+
+        //These are the users answer options
+        //Some range from: "I strongly agree" to "I strongly disagree"
+        //others are simple yes and no questions.
+        public String[] getAnswerOptions() { return answerOptions; }
+
+        public void setAnswerOptions(String[] answerOptions) { this.answerOptions = answerOptions; }
+
+        //The following hasNext og Next eru til að ítra yfir allar spurningarnar
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public Question next() {
+            return null;
+        }
+
+        //This is for easier debug in PostitNote
+    /*
+    @Override
+    public String toString(){
+        return String.format(
+               "Postit Note[name=%s, note=%s]",
+                name,note);
     }
+    */
 
-//    class JsonEncodeDemo {
-
-    public static void main(String[] args) throws JSONException {
-        //https://www.javatpoint.com/java-json-example
-        JSONObject obj = new JSONObject();
-
-        obj.put("name", "foo");
-        obj.put("num", new Integer(100));
-        obj.put("balance", new Double(1000.21));
-        obj.put("is_vip", new Boolean(true));
-
-        System.out.print(obj);
-    }
-
-    public void setTextResId(int TextResId) {
-        this.mTextResId = mTextResId;
-    }
-
-    public int getTextResId() {
-        return mTextResId;
-    }
-
-    public void setAnswerTrue(boolean AnswerTrue) {
-        this.mAnswerTrue = mAnswerTrue;
-    }
-
-    public boolean ismAnswerTrue() {
-        return mAnswerTrue;
-    }
 }
