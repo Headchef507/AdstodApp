@@ -17,5 +17,13 @@ public class JsonEncode {
         return obj;
     }
 
+    public JSONObject getJSONResult(String[] answers) throws JSONException{
+        JSONObject jsonAnswers = new JSONObject();
+        for(int i = 0; i<answers.length;i++) {
+            jsonAnswers.put("name" + i, answers[i]);
+        }
+        return jsonAnswers;
+    }
+
 
 }
