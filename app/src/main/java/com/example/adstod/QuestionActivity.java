@@ -55,6 +55,12 @@ public class QuestionActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    // Public method to update answer from fragment
+    public void updateAnswer(int answer) {
+        mCurrentQuestion.setAnswer(answer);
+        mQuestions.set(mCurrentIndex, mCurrentQuestion);
+    }
+
     // If on the first question make the previous button invisible
     private void setPreviousVisibility() {
         if (mCurrentIndex == 0) {

@@ -43,11 +43,12 @@ public class QuestionFragment extends Fragment {
             rbn.setId(i);
             rbn.setText(mOptions[i-1]);
 
-            // Add a listener to the buttons to determine which is selected
+            // Add a listener to the buttons to determine which is selected and update the answer
             rbn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mSelectedOption = rgp.getCheckedRadioButtonId();
+                    ((QuestionActivity) getActivity()).updateAnswer(mSelectedOption);
                 }
             });
             rgp.addView(rbn);
