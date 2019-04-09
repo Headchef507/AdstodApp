@@ -10,6 +10,13 @@ Map and JSONArray is a java.util.List, so you can access them with standard oper
 https://www.tutorialspoint.com/how-to-parse-json-in-java
 */
 public class JsonDecode {
+    //theQnA[0] = is the Question, theQnA[1-n] are the Answer Options
+    private String[] theQnA;
+
+        public String[] QuestionParser(JSONObject QnA){
+
+            return theQnA;
+        }
 
         public static void main(String[] args) {
             JSONParser parser = new JSONParser();
