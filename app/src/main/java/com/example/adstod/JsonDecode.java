@@ -35,7 +35,7 @@ public class JsonDecode {
             return theQnA;
         }
 
-        public static void main(String[] args) {
+  /*      public static void main(String[] args) {
             JSONParser parser = new JSONParser();
             String s = "[0,{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}]";
             /*
@@ -71,7 +71,7 @@ public class JsonDecode {
 }
             */
 
-            try{
+   /*         try{
                 Object obj = parser.parse(s);
                 JSONArray array = (JSONArray)obj;
 
@@ -100,4 +100,5 @@ public class JsonDecode {
                 System.out.println(pe);
             }
         }
+        */
     }

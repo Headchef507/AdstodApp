@@ -24,7 +24,7 @@ public class OldQuestion {
 
 //    class JsonEncodeDemo {
 
-    public static void main(String[] args) throws JSONException {
+ /*   public static void main(String[] args) throws JSONException {
         //https://www.javatpoint.com/java-json-example
         JSONObject obj = new JSONObject();
 
@@ -35,7 +35,7 @@ public class OldQuestion {
 
         System.out.print(obj);
     }
-
+*/
     public void setTextResId(int TextResId) {
         this.mTextResId = mTextResId;
     }
