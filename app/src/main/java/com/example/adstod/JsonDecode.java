@@ -1,4 +1,6 @@
 package com.example.adstod;
+
+import or
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
@@ -15,18 +17,21 @@ public class JsonDecode {
     JSONParser parser = new JSONParser();
 
         public String[] QuestionParser(JSONObject QnA){
+            int i = 0;
             String jstring = QnA.toString();
             Object obj = QnA;
+
             JSONArray array = (JSONArray)obj;
             JSONObject obj2 = (JSONObject)array.get(1);
-            theQnA[0] = obj2.toString();
+            while(theQnA[i] != "") {
+                theQnA[0] = obj2.toString();
+                i++;
+            }
+
 
            // while(QnA.hasNext())
            // theQnA = QnA.Answers[0];
-        } catch(ParseException pe) {
 
-        System.out.println("position: " + pe.getPosition());
-        System.out.println(pe);
 
             return theQnA;
         }
