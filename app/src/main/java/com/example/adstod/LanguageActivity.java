@@ -17,6 +17,7 @@ public class LanguageActivity extends AppCompatActivity {
 
     private void applyLanguage() {
         Intent intent = new Intent(this, QuestionActivity.class);
+
         // Sendum tungumál áfram til að nota í næsta skjá
         intent.putExtra(KEY_LANGUAGE, mLanguage);
         startActivity(intent);
