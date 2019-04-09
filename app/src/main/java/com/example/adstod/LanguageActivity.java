@@ -6,6 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import retrofit2.Retrofit;
+
 // Controller fyrir tungumálaskjá
 public class LanguageActivity extends AppCompatActivity {
 
@@ -17,6 +24,14 @@ public class LanguageActivity extends AppCompatActivity {
 
     private void applyLanguage() {
         Intent intent = new Intent(this, QuestionActivity.class);
+        URLConnection connection = null;
+        try {
+            connection = new URL("https://adstod.herokuapp.com/allquestions").openConnection();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Sendum tungumál áfram til að nota í næsta skjá
         intent.putExtra(KEY_LANGUAGE, mLanguage);
@@ -27,6 +42,15 @@ public class LanguageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language);
+
+        try {
+            URLConnection connection = new URL("https://adstod.herokuapp.com/allquestions").openConnection();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         // Takki fyrir ensku
         mEnglishButton = findViewById(R.id.english_button);

@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
@@ -51,12 +53,13 @@ public class MainActivity extends AppCompatActivity {
         mAcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<ResponseBody> call = service.hello();
+                Call<ResponseBody> call = service.allquestions();
                 final Context context = getApplicationContext();
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> _,
                                            Response<ResponseBody> response) {
+
                         acceptTerms();
                     }
 
