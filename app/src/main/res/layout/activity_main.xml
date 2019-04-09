@@ -4,17 +4,9 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
-    <LinearLayout
+    <Button
+        android:id="@+id/accept_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <!-- Muna að tengja id við takka-->
-        <!-- True and false buttons will be switched out for RadioButtons that are in a RadioGroup -->
-        <Button
-            android:id="@+id/accept_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/accept_button"/>
-
-    </LinearLayout>
+        android:text="@string/accept_button"/>
 </LinearLayout>
