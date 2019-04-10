@@ -7,5 +7,5 @@ import retrofit2.http.Path;
 
 public interface HerokuService {
     @GET("allquestions")
-    Call<ResponseBody> allquestions();
+    Call<ResponseBody> hello();
 }

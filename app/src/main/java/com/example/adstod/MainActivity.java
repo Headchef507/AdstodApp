@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mAcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<ResponseBody> call = service.allquestions();
+                Call<ResponseBody> call = service.hello();
                 final Context context = getApplicationContext();
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
