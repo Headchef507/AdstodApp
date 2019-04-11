@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.simple.JSONArray;
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -39,6 +37,9 @@ public class QuestionActivity extends AppCompatActivity {
     private void updateQuestion(){
         // Set the current question
         mCurrentQuestion = mQuestions.get(mCurrentIndex);
+
+        TextView question_text_view = findViewById(R.id.question_text_view);
+        question_text_view.setText(mCurrentQuestion.getQuestionText());
 
         // Create fragment and give it an argument
         QuestionFragment newFragment = new QuestionFragment();
@@ -78,13 +79,11 @@ public class QuestionActivity extends AppCompatActivity {
 
     // If on the last question make the next button a finish button
     private void setNextVisibility() {
-        /*
-        if (mCurrentIndex == mQuestions.size() - 1 && mCurrentIndex != 0) {
+        if (mCurrentIndex == mQuestions.size() - 1) {
             mNextButton.setText(R.string.finish_button);
         } else {
             mNextButton.setText(R.string.next_button);
-        }*/
-        mNextButton.setText(R.string.next_button);
+        }
     }
 
     private void sendResults() {
@@ -127,7 +126,6 @@ public class QuestionActivity extends AppCompatActivity {
         mCurrentQuestion = mQuestions.get(mCurrentIndex);
 
         TextView question_text_view = findViewById(R.id.question_text_view);
-        System.out.println(mCurrentQuestion.getQuestionText());
         question_text_view.setText(mCurrentQuestion.getQuestionText());
 
         // Create a new fragment to be placed in the activity layout
@@ -155,7 +153,7 @@ public class QuestionActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCurrentIndex == mQuestions.size()-1 && mCurrentIndex != 0) {
+                if (mCurrentIndex == mQuestions.size()-1) {
                     sendResults();
                 } else {
                     mCurrentIndex++;

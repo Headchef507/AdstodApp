@@ -31,7 +31,7 @@ public class JsonDecode {
         while (i < object.size()) {
             Question que = new Question();
 
-            temp = (JSONObject) object.get(0);
+            temp = (JSONObject) object.get(i);
             String qtext = (String) temp.get("questiontext");
             que.setQuestionText(qtext);
 

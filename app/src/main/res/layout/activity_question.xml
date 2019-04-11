@@ -16,7 +16,7 @@
     <FrameLayout
         android:id="@+id/question_fragment"
         android:layout_width="240dp"
-        android:layout_height="360dp"
+        android:layout_height="240dp"
         android:orientation="vertical">
     </FrameLayout>
 
