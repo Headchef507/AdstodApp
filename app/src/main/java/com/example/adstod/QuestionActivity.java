@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 // Controller for the question screen
 public class QuestionActivity extends AppCompatActivity {
@@ -96,6 +99,16 @@ public class QuestionActivity extends AppCompatActivity {
 
         // Fetch language from LanguageActivity
         mLanguage = getIntent().getStringExtra(KEY_LANGUAGE);
+        String j = null;
+        try {
+            j = new Connect().execute("http://adstodbackend.herokuapp.com/").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(j);
 
         // Fetch questions from database
         String[] options = {"Option 1", "Option 2"};

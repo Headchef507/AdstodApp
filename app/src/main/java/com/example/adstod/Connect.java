@@ -1,36 +1,75 @@
 package com.example.adstod;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.widget.Toast;
+import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
+class Connect extends AsyncTask<String, Void, String> {
 
-class Connect extends AsyncTask<String, Void, JSONObject> {
-    @Override
-    protected JSONObject doInBackground(String... strings) {
-        try{
-            HttpsURLConnection connection;
+    /*
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        ProgressDialog pd = new ProgressDialog();
+        pd.setMessage("Please wait");
+        pd.setCancelable(false);
+        pd.show();
+    }*/
+
+    protected String doInBackground(String... params) {
+
+
+        HttpURLConnection connection = null;
+        BufferedReader reader = null;
+
+        try {
+            URL url = new URL(params[0]);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+
+            System.out.println(connection);
+
+            InputStream stream = connection.getInputStream();
+
+            reader = new BufferedReader(new InputStreamReader(stream));
+
+            StringBuffer buffer = new StringBuffer();
+            String line = "";
+
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line+"\n");
+                Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
+
+            }
+
+            System.out.println(buffer.toString());
+            return buffer.toString();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
             try {
-                connection = (HttpsURLConnection) new URL("https://adstodbackend.herokuapp.com/").openConnection();
-                JSONObject o = (JSONObject) connection.getContent();
-                if(o != null) return o;
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
+                if (reader != null) {
+                    reader.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }
