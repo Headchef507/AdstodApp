@@ -5,8 +5,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.simple.JSONArray;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -22,7 +25,7 @@ public class QuestionActivity extends AppCompatActivity {
     private static final String KEY_QUESTIONS = "com.example.adstod.questions";
 
     private int mCurrentIndex = 0;
-    private String mLanguage = "english";
+    private String mLanguage = "ENG";
     private ArrayList<Question> mQuestions;
     private Question mCurrentQuestion;
 
@@ -75,11 +78,13 @@ public class QuestionActivity extends AppCompatActivity {
 
     // If on the last question make the next button a finish button
     private void setNextVisibility() {
-        if (mCurrentIndex == mQuestions.size() - 1) {
+        /*
+        if (mCurrentIndex == mQuestions.size() - 1 && mCurrentIndex != 0) {
             mNextButton.setText(R.string.finish_button);
         } else {
             mNextButton.setText(R.string.next_button);
-        }
+        }*/
+        mNextButton.setText(R.string.next_button);
     }
 
     private void sendResults() {
@@ -99,27 +104,31 @@ public class QuestionActivity extends AppCompatActivity {
 
         // Fetch language from LanguageActivity
         mLanguage = getIntent().getStringExtra(KEY_LANGUAGE);
-        String j = null;
+
+        // Fetch questions from database
+        JSONArray j = null;
+        String[] params = {"http://adstodbackend.herokuapp.com/", mLanguage};
         try {
-            j = new Connect().execute("http://adstodbackend.herokuapp.com/").get();
+            j = new Connect().execute(params).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        System.out.println(j);
-
-        // Fetch questions from database
-        String[] options = {"Option 1", "Option 2"};
-        Question q1 = new Question(1, "Question 1", options, 0);
-        Question q2 = new Question(2, "Question 2", options, 0);
-        Question q3 = new Question(3, "Question 3", options, 0);
-        mQuestions = new ArrayList<>();
-        mQuestions.add(q1); mQuestions.add(q2); mQuestions.add(q3);
+        JsonDecode guy = new JsonDecode();
+        try {
+            mQuestions = guy.TheJsonParser(j);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // Set current question
         mCurrentQuestion = mQuestions.get(mCurrentIndex);
+
+        TextView question_text_view = findViewById(R.id.question_text_view);
+        System.out.println(mCurrentQuestion.getQuestionText());
+        question_text_view.setText(mCurrentQuestion.getQuestionText());
 
         // Create a new fragment to be placed in the activity layout
         QuestionFragment firstFragment = new QuestionFragment();
@@ -135,8 +144,8 @@ public class QuestionActivity extends AppCompatActivity {
                 .add(R.id.question_fragment, firstFragment).commit();
 
         // Navigation buttons
-        mNextButton = findViewById(R.id.next_button);
         mPreviousButton = findViewById(R.id.previous_button);
+        mNextButton = findViewById(R.id.next_button);
 
         // Change buttons if on first or last question
         setPreviousVisibility();
@@ -146,7 +155,7 @@ public class QuestionActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCurrentIndex == mQuestions.size()-1) {
+                if (mCurrentIndex == mQuestions.size()-1 && mCurrentIndex != 0) {
                     sendResults();
                 } else {
                     mCurrentIndex++;

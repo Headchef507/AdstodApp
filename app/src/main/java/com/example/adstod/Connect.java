@@ -4,7 +4,11 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.simple.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +17,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
-class Connect extends AsyncTask<String, Void, String> {
+class Connect extends AsyncTask<String, Void, JSONArray> {
 
     /*
     protected void onPreExecute() {
@@ -26,38 +31,46 @@ class Connect extends AsyncTask<String, Void, String> {
         pd.show();
     }*/
 
-    protected String doInBackground(String... params) {
+    protected JSONArray doInBackground(String... params) {
 
 
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 
         try {
-            URL url = new URL(params[0]);
+            String concatUrl = params[0] + "?language=" + params[1];
+            URL url = new URL(concatUrl);
+            System.out.println(concatUrl);
+
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
 
-            System.out.println(connection);
+            connection.setRequestMethod("GET");
 
             InputStream stream = connection.getInputStream();
 
             reader = new BufferedReader(new InputStreamReader(stream));
 
             StringBuffer buffer = new StringBuffer();
-            String line = "";
+            String line;
 
             while ((line = reader.readLine()) != null) {
                 buffer.append(line+"\n");
-                Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
-
             }
 
-            System.out.println(buffer.toString());
-            return buffer.toString();
+            Object object;
+            JSONArray arrayObj;
+            JSONParser jsonParser=new JSONParser();
+            object=jsonParser.parse(buffer.toString());
+            arrayObj=(JSONArray) object;
+
+            return arrayObj;
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             if (connection != null) {
