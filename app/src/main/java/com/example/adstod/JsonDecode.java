@@ -19,31 +19,67 @@ public class JsonDecode {
     private String[] theQnA;
     JSONParser parser = new JSONParser();
 
-        public String[] QuestionParser(JSONObject QnA) throws JSONException {
-            JSONObject object = new JSONObject();
+    //adding my Answer options to Object Question
+    public Question AnswerOptionParser(JSONArray array) throws JSONException {
+        Question q = new Question();
+        String[] theAnswers = new String[array.length()];
+        int i = 0;
+        while(array.isNull(i)) {
+            theQnA[i] = (String) array.get(i);
+            i++;
+        }
+        q.setAnswerOptions(theAnswers);
+        return q;
+    }
 
-            List<Question> listq = (List<Question>) QnA.get("forApp");
-            listq.get(1);
+    //method to add more Questions to list
+    public List<Question> ListQuestion(List<Question> list, Question q){
+        list.add(list.size(),q);
+        return list;
+    }
 
-            int i = 0;
-            String jstring = QnA.toString();
-            Question q = new Question();
-            String temp = QnA.getString("Question");
-            q.setQuestionText(temp);
+    //Method to create the List<Question>
+    public List<Question> TheJsonParser(JSONArray object) throws JSONException{
+        int i = 0;
+        List<Question> thelist = null;
+        Question q = new Question();
+        JSONObject temp = new JSONObject();
+        JSONArray arraytemp = new JSONArray();
+        while(object.isNull(i)) {
+            temp = (JSONObject) object.get(0);
+            q = QuestionParser(temp);
+            arraytemp = temp.getJSONArray("options");
+            q = AnswerOptionParser(arraytemp);
+            thelist = ListQuestion(thelist, q);
+        }
+        return thelist;
+    }
+
+    //method to get the Questions, for example "What is your sex?"
+    public Question QuestionParser(JSONObject QnA) throws JSONException {
+        //JSONObject object = new JSONObject();
+        Question que = new Question();
+        int i = 0;
+        String q = QnA.getString("question");
+        que.setQuestionText(q);
+        return que;
+
+            //int i = 0;
+            //String jstring = QnA.toString();
+           // Question q = new Question();
+            //String temp = QnA.getString("Question");
+            //  q.setQuestionText(temp);
 
           //  JSONArray array =;
          //   JSONObject obj2 = (JSONObject)array.get(1);
-            while(theQnA[i] != "") {
-                theQnA[0] = q.toString();
-                i++;
-            }
+
 
 
            // while(QnA.hasNext())
            // theQnA = QnA.Answers[0];
 
 
-            return theQnA;
+           // return theQnA;
         }
 
   /*      public static void main(String[] args) {
