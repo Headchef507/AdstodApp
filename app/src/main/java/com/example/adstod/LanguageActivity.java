@@ -17,6 +17,8 @@ import java.net.URLConnection;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 
 // Controller fyrir tungumálaskjá
