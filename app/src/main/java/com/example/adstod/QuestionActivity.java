@@ -35,9 +35,6 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void updateQuestion(){
-        // Set the current question
-        mCurrentQuestion = mQuestions.get(mCurrentIndex);
-
         TextView question_text_view = findViewById(R.id.question_text_view);
         question_text_view.setText(mCurrentQuestion.getQuestionText());
 
@@ -66,6 +63,7 @@ public class QuestionActivity extends AppCompatActivity {
     public void updateAnswer(int answer) {
         mCurrentQuestion.setAnswer(answer);
         mQuestions.set(mCurrentIndex, mCurrentQuestion);
+        setNextVisibility();
     }
 
     // If on the first question make the previous button invisible
@@ -79,6 +77,11 @@ public class QuestionActivity extends AppCompatActivity {
 
     // If on the last question make the next button a finish button
     private void setNextVisibility() {
+        if (mCurrentQuestion.getAnswer() == 0) {
+            mNextButton.setVisibility(View.INVISIBLE);
+        } else {
+            mNextButton.setVisibility(View.VISIBLE);
+        }
         if (mCurrentIndex == mQuestions.size() - 1) {
             mNextButton.setText(R.string.finish_button);
         } else {
@@ -157,6 +160,8 @@ public class QuestionActivity extends AppCompatActivity {
                     sendResults();
                 } else {
                     mCurrentIndex++;
+                    // Set the current question
+                    mCurrentQuestion = mQuestions.get(mCurrentIndex);
                     setPreviousVisibility();
                     setNextVisibility();
                     updateQuestion();
@@ -169,6 +174,8 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mCurrentIndex--;
+                // Set the current question
+                mCurrentQuestion = mQuestions.get(mCurrentIndex);
                 setPreviousVisibility();
                 setNextVisibility();
                 updateQuestion();

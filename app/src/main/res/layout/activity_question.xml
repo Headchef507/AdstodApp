@@ -9,14 +9,14 @@
 
     <TextView
         android:id="@+id/question_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="48pt" />
+        android:paddingBottom="36pt" />
 
     <FrameLayout
         android:id="@+id/question_fragment"
         android:layout_width="240dp"
-        android:layout_height="240dp"
+        android:layout_height="180dp"
         android:orientation="vertical">
     </FrameLayout>
 

@@ -11,7 +11,9 @@ public class Question {
     private int answer;
 
     // Constructors for question
-    public Question() {}
+    public Question() {
+        this.answer = 0;
+    }
     public Question(long id, String questionText, String[] answerOptions, int answer){
         this.id = id;
         this.questionText = questionText;

@@ -4,11 +4,9 @@ import org.json.JSONException;
 import org.json.simple.JSONObject;
 
 import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
 import java.util.ArrayList;
 
 public class JsonDecode {
-    JSONParser parser = new JSONParser();
     ArrayList<Question> questions = new ArrayList<>();
 
     //adding my Answer options to Object Question
