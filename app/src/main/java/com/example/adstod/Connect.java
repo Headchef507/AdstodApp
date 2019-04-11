@@ -20,9 +20,10 @@ class Connect extends AsyncTask<String, Void, JSONObject> {
         try{
             HttpsURLConnection connection;
             try {
-                connection = (HttpsURLConnection) new URL("https://adstod.herokuapp.com/allquestions").openConnection();
+                connection = (HttpsURLConnection) new URL("https://adstodbackend.herokuapp.com/").openConnection();
                 JSONObject o = (JSONObject) connection.getContent();
-                if(o == null) return new JSONObject("test");
+                if(o != null) return o;
+
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

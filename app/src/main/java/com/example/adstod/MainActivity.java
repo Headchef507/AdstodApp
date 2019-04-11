@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import org.json.JSONArray;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -21,6 +23,7 @@ import retrofit2.Retrofit;
 
 // Controller fyrir upphafssíðu
 public class MainActivity extends AppCompatActivity {
+    private List<Question> Questions;
 
     private Button mAcceptButton;
     private Button mRejectButton;
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://adstod.herokuapp.com/")
+                .baseUrl("https://adstodbackend.herokuapp.com/")
                 .build();
 
         final HerokuService service = retrofit.create(HerokuService.class);
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseBody> _,
                                            Response<ResponseBody> response) {
-
                         acceptTerms();
                     }
 
