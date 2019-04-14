@@ -1,4 +1,4 @@
-package com.example.adstod;
+package com.example.adstod.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.example.adstod.R;
+import com.example.adstod.activities.QuestionActivity;
 
 // Fragment for answer options
 public class QuestionFragment extends Fragment {

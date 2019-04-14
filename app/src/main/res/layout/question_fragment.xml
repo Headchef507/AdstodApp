@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".QuestionFragment">
+    tools:context=".fragments.QuestionFragment">
 
     <RadioGroup
         android:id="@+id/options"

@@ -14,16 +14,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LanguageActivity">
+        <activity android:name=".activities.LanguageActivity">
 
         </activity>
-        <activity android:name=".QuestionActivity">
+        <activity android:name=".activities.QuestionActivity">
 
         </activity>
     </application>

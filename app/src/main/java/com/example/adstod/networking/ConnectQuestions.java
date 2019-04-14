@@ -1,12 +1,8 @@
-package com.example.adstod;
+package com.example.adstod.networking;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.simple.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -17,52 +13,43 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
-class Connect extends AsyncTask<String, Void, JSONArray> {
-
-    /*
-    protected void onPreExecute() {
-        super.onPreExecute();
-
-        ProgressDialog pd = new ProgressDialog();
-        pd.setMessage("Please wait");
-        pd.setCancelable(false);
-        pd.show();
-    }*/
+// A class to get questions from the server
+public class ConnectQuestions extends AsyncTask<String, Void, JSONArray> {
 
     protected JSONArray doInBackground(String... params) {
-
-
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 
         try {
+            // Create a query URL
             String concatUrl = params[0] + "?language=" + params[1];
             URL url = new URL(concatUrl);
-            System.out.println(concatUrl);
 
+            // Connect to the url
             connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
             connection.connect();
 
-            connection.setRequestMethod("GET");
-
+            // Read input from connection i.e. get stuff
             InputStream stream = connection.getInputStream();
-
             reader = new BufferedReader(new InputStreamReader(stream));
 
+            // Append input to a StringBuffer
             StringBuffer buffer = new StringBuffer();
             String line;
-
             while ((line = reader.readLine()) != null) {
                 buffer.append(line+"\n");
             }
 
+            // Various JSON stuff
             Object object;
             JSONArray arrayObj;
-            JSONParser jsonParser=new JSONParser();
-            object=jsonParser.parse(buffer.toString());
-            arrayObj=(JSONArray) object;
+            JSONParser jsonParser = new JSONParser();
+
+            // Parse buffered input to a JSONArray
+            object = jsonParser.parse(buffer.toString());
+            arrayObj = (JSONArray) object;
 
             return arrayObj;
 

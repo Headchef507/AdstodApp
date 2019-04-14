@@ -9,9 +9,11 @@
 
     <TextView
         android:id="@+id/question_text_view"
-        android:layout_width="240dp"
+        android:maxWidth="260dp"
+        android:minWidth="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="36pt" />
+        android:layout_marginBottom="36pt" />
 
     <FrameLayout
         android:id="@+id/question_fragment"

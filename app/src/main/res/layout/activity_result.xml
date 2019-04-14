@@ -6,19 +6,11 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-        <TextView
+    <TextView
         android:id="@+id/question_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="48pt" />
-    </ScrollView>
+        android:paddingBottom="36pt" />
+
 </LinearLayout>

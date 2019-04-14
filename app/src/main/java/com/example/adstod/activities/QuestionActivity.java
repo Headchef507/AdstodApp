@@ -1,4 +1,4 @@
-package com.example.adstod;
+package com.example.adstod.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -7,7 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.json.JSONException;
+import com.example.adstod.networking.ConnectQuestions;
+import com.example.adstod.networking.ConnectResults;
+import com.example.adstod.networking.JsonDecode;
+import com.example.adstod.entities.Question;
+import com.example.adstod.fragments.QuestionFragment;
+import com.example.adstod.R;
+import com.example.adstod.networking.JsonEncode;
+
+import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -19,10 +27,12 @@ public class QuestionActivity extends AppCompatActivity {
     private Button mPreviousButton;
 
     private static final String KEY_INDEX = "com.example.adstod.index";
+    private static final String KEY_PERMISSION = "com.example.adstod.permission";
     private static final String KEY_LANGUAGE = "com.example.adstod.language";
     private static final String KEY_QUESTIONS = "com.example.adstod.questions";
 
     private int mCurrentIndex = 0;
+    private int mPermission;
     private String mLanguage = "ENG";
     private ArrayList<Question> mQuestions;
     private Question mCurrentQuestion;
@@ -34,7 +44,8 @@ public class QuestionActivity extends AppCompatActivity {
         savedInstanceState.putSerializable(KEY_QUESTIONS, mQuestions);
     }
 
-    private void updateQuestion(){
+    // Change the displayed question
+    private void changeQuestion(){
         TextView question_text_view = findViewById(R.id.question_text_view);
         question_text_view.setText(mCurrentQuestion.getQuestionText());
 
@@ -59,7 +70,7 @@ public class QuestionActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    // Public method to update answer from fragment
+    // Public method to update answer from QuestionFragment
     public void updateAnswer(int answer) {
         mCurrentQuestion.setAnswer(answer);
         mQuestions.set(mCurrentIndex, mCurrentQuestion);
@@ -76,6 +87,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     // If on the last question make the next button a finish button
+    // Also hide the button until an answer is selected
     private void setNextVisibility() {
         if (mCurrentQuestion.getAnswer() == 0) {
             mNextButton.setVisibility(View.INVISIBLE);
@@ -89,8 +101,24 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-    private void sendResults() {
+    // Finish answering questions and send in the answers
+    private void sendAnswers() {
+        JSONArray jRes = null;
+        // Encode answers into a JSONObject
+        JsonEncode jEnc = new JsonEncode();
+        JSONObject jAns = jEnc.composeAnswers(mQuestions, mPermission, mLanguage);
 
+        // Initialise
+        ConnectResults conRes = new ConnectResults(jAns);
+        String[] params = {"http://adstodbackend.herokuapp.com/"};
+        try {
+            jRes = conRes.execute(params).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        System.out.println(jRes);
     }
 
     @Override
@@ -104,26 +132,24 @@ public class QuestionActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_question);
 
-        // Fetch language from LanguageActivity
+        // Fetch permission and language from LanguageActivity
+        mPermission = getIntent().getIntExtra(KEY_PERMISSION, 0);
         mLanguage = getIntent().getStringExtra(KEY_LANGUAGE);
 
-        // Fetch questions from database
-        JSONArray j = null;
+        // Fetch questions from database as a JSON array
+        JSONArray jQuest = null;
         String[] params = {"http://adstodbackend.herokuapp.com/", mLanguage};
         try {
-            j = new Connect().execute(params).get();
+            jQuest = new ConnectQuestions().execute(params).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        JsonDecode guy = new JsonDecode();
-        try {
-            mQuestions = guy.TheJsonParser(j);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        // Decode the JSON object received into an ArrayList of questions
+        JsonDecode jDec = new JsonDecode();
+        mQuestions = jDec.parseQuestions(jQuest);
 
         // Set current question
         mCurrentQuestion = mQuestions.get(mCurrentIndex);
@@ -148,7 +174,7 @@ public class QuestionActivity extends AppCompatActivity {
         mPreviousButton = findViewById(R.id.previous_button);
         mNextButton = findViewById(R.id.next_button);
 
-        // Change buttons if on first or last question
+        // Initialise button visibility
         setPreviousVisibility();
         setNextVisibility();
 
@@ -156,15 +182,18 @@ public class QuestionActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCurrentIndex == mQuestions.size()-1) {
-                    sendResults();
-                } else {
+                if (mCurrentIndex == 1) {
+                    sendAnswers();
+                }
+                /*if (mCurrentIndex == mQuestions.size()-1) {
+                    sendAnswers();
+                } */else {
                     mCurrentIndex++;
                     // Set the current question
                     mCurrentQuestion = mQuestions.get(mCurrentIndex);
                     setPreviousVisibility();
                     setNextVisibility();
-                    updateQuestion();
+                    changeQuestion();
                 }
             }
         });
@@ -178,7 +207,7 @@ public class QuestionActivity extends AppCompatActivity {
                 mCurrentQuestion = mQuestions.get(mCurrentIndex);
                 setPreviousVisibility();
                 setNextVisibility();
-                updateQuestion();
+                changeQuestion();
             }
         });
     }

@@ -1,19 +1,16 @@
-package com.example.adstod;
-
+package com.example.adstod.entities;
 
 // The question entity
 public class Question {
 
-    // Declares that this attribute is the id (primary key
+    // Bunch of local variables
     private long id;
     private String questionText;
     private String[] answerOptions;
     private int answer;
 
     // Constructors for question
-    public Question() {
-        this.answer = 0;
-    }
+    public Question() { this.answer = 0; }
     public Question(long id, String questionText, String[] answerOptions, int answer){
         this.id = id;
         this.questionText = questionText;
