@@ -1,5 +1,6 @@
 package com.example.adstod.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -26,10 +27,9 @@ public class QuestionActivity extends AppCompatActivity {
     private Button mNextButton;
     private Button mPreviousButton;
 
-    private static final String KEY_INDEX = "com.example.adstod.index";
     private static final String KEY_PERMISSION = "com.example.adstod.permission";
     private static final String KEY_LANGUAGE = "com.example.adstod.language";
-    private static final String KEY_QUESTIONS = "com.example.adstod.questions";
+    private static final String KEY_RESULTS = "com.example.adstod.results";
 
     private int mCurrentIndex = 0;
     private int mPermission;
@@ -37,11 +37,46 @@ public class QuestionActivity extends AppCompatActivity {
     private ArrayList<Question> mQuestions;
     private Question mCurrentQuestion;
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
-        savedInstanceState.putSerializable(KEY_QUESTIONS, mQuestions);
+    // If on the last question make the next button a finish button
+    // Also hide the button until an answer is selected
+    private void setNextVisibility() {
+        if (mCurrentQuestion.getAnswer() == 0) {
+            mNextButton.setVisibility(View.INVISIBLE);
+        } else {
+            mNextButton.setVisibility(View.VISIBLE);
+        }
+        if (mCurrentIndex == mQuestions.size() - 1) {
+            mNextButton.setText(R.string.finish_button);
+        } else {
+            mNextButton.setText(R.string.next_button);
+        }
+    }
+
+    // If on the first question make the previous button invisible
+    private void setPreviousVisibility() {
+        if (mCurrentIndex == 0) {
+            mPreviousButton.setVisibility(View.INVISIBLE);
+        } else {
+            mPreviousButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // Increment mCurrentIndex
+    private void incrementIndex() {
+        if ((mCurrentIndex == 3 || mCurrentIndex == 8) && mCurrentQuestion.getAnswer() == 2) {
+            mCurrentIndex += 2;
+        } else {
+            mCurrentIndex += 1;
+        }
+    }
+
+    // Decrement mCurrentIndex
+    private void decrementIndex() {
+        if ((mCurrentIndex == 5 || mCurrentIndex == 10) && mQuestions.get(mCurrentIndex-2).getAnswer() == 2) {
+            mCurrentIndex -= 2;
+        } else {
+            mCurrentIndex -= 1;
+        }
     }
 
     // Change the displayed question
@@ -77,33 +112,10 @@ public class QuestionActivity extends AppCompatActivity {
         setNextVisibility();
     }
 
-    // If on the first question make the previous button invisible
-    private void setPreviousVisibility() {
-        if (mCurrentIndex == 0) {
-            mPreviousButton.setVisibility(View.INVISIBLE);
-        } else {
-            mPreviousButton.setVisibility(View.VISIBLE);
-        }
-    }
-
-    // If on the last question make the next button a finish button
-    // Also hide the button until an answer is selected
-    private void setNextVisibility() {
-        if (mCurrentQuestion.getAnswer() == 0) {
-            mNextButton.setVisibility(View.INVISIBLE);
-        } else {
-            mNextButton.setVisibility(View.VISIBLE);
-        }
-        if (mCurrentIndex == mQuestions.size() - 1) {
-            mNextButton.setText(R.string.finish_button);
-        } else {
-            mNextButton.setText(R.string.next_button);
-        }
-    }
-
     // Finish answering questions and send in the answers
     private void sendAnswers() {
         JSONArray jRes = null;
+
         // Encode answers into a JSONObject
         JsonEncode jEnc = new JsonEncode();
         JSONObject jAns = jEnc.composeAnswers(mQuestions, mPermission, mLanguage);
@@ -118,18 +130,16 @@ public class QuestionActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        System.out.println(jRes);
+
+        // Start a new intent and pass results to it
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra(KEY_RESULTS, jRes.toJSONString());
+        startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Check if we received any state from a previous instance of the activity
-        if(savedInstanceState != null){
-            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX,0);
-            mQuestions = (ArrayList<Question>) savedInstanceState.getSerializable(KEY_QUESTIONS);
-        }
         setContentView(R.layout.activity_question);
 
         // Fetch permission and language from LanguageActivity
@@ -182,13 +192,10 @@ public class QuestionActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCurrentIndex == 1) {
+                if (mCurrentIndex == mQuestions.size()-1) {
                     sendAnswers();
-                }
-                /*if (mCurrentIndex == mQuestions.size()-1) {
-                    sendAnswers();
-                } */else {
-                    mCurrentIndex++;
+                } else {
+                    incrementIndex();
                     // Set the current question
                     mCurrentQuestion = mQuestions.get(mCurrentIndex);
                     setPreviousVisibility();
@@ -202,7 +209,7 @@ public class QuestionActivity extends AppCompatActivity {
         mPreviousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex--;
+                decrementIndex();
                 // Set the current question
                 mCurrentQuestion = mQuestions.get(mCurrentIndex);
                 setPreviousVisibility();

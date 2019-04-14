@@ -3,6 +3,12 @@
     <string name="accept_button">
         Accept
     </string>
+    <string name="reject_button">
+        Reject
+    </string>
+    <string name="warning_text">
+        Með samþykki gefur þú leyfi til að geyma svörin sem þú setur inn\n\nBy accepting you hereby give permission for the app to save the answers you input\n\nPolish equivalent
+    </string>
     <string name="english_button">
         English
     </string>
@@ -20,27 +26,6 @@
     </string>
     <string name="finish_button">
         Finish
-    </string>
-    <string name="option_MjogSam">
-        Mjög sammála
-    </string>
-    <string name="option_FrekarSam">
-        Frekar sammála
-    </string>
-    <string name="option_HvorkiNe">
-        Hvorki né
-    </string>
-    <string name="option_FrekarOsam">
-        Frekar ósammála
-    </string>
-    <string name="option_MjogOsam">
-        Mjög ósammála
-    </string>
-    <string name="reject_button">
-        Reject
-    </string>
-    <string name="warning_text">
-        Með samþykki gefur þú leyfi til að geyma svörin sem þú setur inn\n\nBy accepting you hereby give permission for the app to save the answers you input\n\nPolish equivalent
     </string>
 
 

@@ -1,9 +1,13 @@
 package com.example.adstod.networking;
 
 import com.example.adstod.entities.Question;
+import com.example.adstod.entities.Result;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 // Class to decode JSON objects
@@ -44,5 +48,51 @@ public class JsonDecode {
             questions.add(i, que);
         }
         return questions;
+    }
+
+    // Decode a JSONArray into an int array of phone numbers
+    private int[] parsePhoneNumbers(JSONArray array) {
+        int[] theNumbers = new int[array.size()];
+        for (int i = 0; i < array.size(); i++) {
+            theNumbers[i] = Integer.parseInt((String) array.get(i));
+        }
+        return theNumbers;
+    }
+
+    // Decode a JSONArray into an ArrayList of Results
+    public ArrayList<Result> parseResults(JSONArray jArr) throws MalformedURLException {
+        ArrayList<Result> results = new ArrayList<>();
+        JSONObject temp;
+        JSONArray tempArray;
+        for (int i = 0; i < jArr.size(); i++) {
+            Result res = new Result();
+            temp = (JSONObject) jArr.get(i);
+
+            // Result ID
+            long id = (long) temp.get("id");
+            res.setId(id);
+
+            // Result title
+            String rTitle = (String) temp.get("title");
+            res.setTitle(rTitle);
+
+            // Result link
+            URL rLink = new URL((String) temp.get("link"));
+            res.setLink(rLink);
+
+            // Result description
+            String rDescription = (String) temp.get("description");
+            res.setDescription(rDescription);
+
+            // Phone numbers
+            tempArray = (JSONArray) temp.get("phonenumbers");
+            assert tempArray != null;
+            int[] rNumbers = parsePhoneNumbers(tempArray);
+            res.setPhoneNumbers(rNumbers);
+
+            // Add the question to the ArrayList
+            results.add(i, res);
+        }
+        return results;
     }
 }
